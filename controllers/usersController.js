@@ -1,8 +1,7 @@
 const usersModel = require('../models/usersModels.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-const jwtSecretKey = "SecretKey";
+require('dotenv').config()
 
 const getAllUsers = async (req, res) => {
     const allUsers = await usersModel.find();
@@ -19,7 +18,7 @@ const addUsers = async (req, res) => {
             email: email
         }
     }
-    const authToken = jwt.sign(data, jwtSecretKey);
+    const authToken = jwt.sign(data, process.env.jwtSecretKey);
 
     try {
         await usersModel.create({
